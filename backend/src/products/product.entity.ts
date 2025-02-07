@@ -9,6 +9,6 @@ export class Product {
     salesValue: number | null;
     @Column('int')
     stock: number | null;
-    @Column({ nullable: true }) // Permite salvar a URL da imagem
+    @Column({ nullable: true })
     images: string;
 }

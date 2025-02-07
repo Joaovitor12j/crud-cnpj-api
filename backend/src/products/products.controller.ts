@@ -34,6 +34,7 @@ export class ProductsController {
             }),
         }),
     )
+
     async create(@UploadedFile() file: Express.Multer.File, @Body() body): Promise<Product> {
 
         const newProduct: Partial<Product> = {
