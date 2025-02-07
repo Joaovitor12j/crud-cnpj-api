@@ -23,15 +23,18 @@ const ProductForm = ({ onSuccess, initialData }) => {
                 stock: initialData.stock || 0,
                 images: [],
             });
-        } else {
-            setFormData({
-                description: "",
-                salesValue: 0,
-                stock: 0,
-                images: [],
-            });
         }
     }, [initialData]);
+
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (!e.target.files) return;
+
+        const filesArray = Array.from(e.target.files);
+        setFormData((prevData) => ({
+            ...prevData,
+            images: prevData.images ? [...prevData.images, ...filesArray] : filesArray,
+        }));
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -39,11 +42,17 @@ const ProductForm = ({ onSuccess, initialData }) => {
         form.append("description", formData.description);
         form.append("salesValue", formData.salesValue.toString());
         form.append("stock", formData.stock.toString());
-        formData.images?.forEach((image) => {
+        formData.images.forEach((image) => {
             if (image instanceof File) {
-                form.append("images", image);
+                form.append("image", image);
             }
         });
+
+        console.log("FormData Entries:");
+        for (let pair of form.entries()) {
+            console.log(pair[0], pair[1]);
+        }
+
         try {
             if (initialData) {
                 await updateProduct(initialData.id, form);
@@ -59,17 +68,14 @@ const ProductForm = ({ onSuccess, initialData }) => {
 
     return (
         <div className="container mx-auto p-6 space-y-6">
-            <div className="flex justify-between items-center">
-                <DialogHeader>
-                    <DialogTitle>
-                        {initialData ? "Editar produto" : "Criar novo produto"}
-                    </DialogTitle>
-                </DialogHeader>
-            </div>
+            <DialogHeader>
+                <DialogTitle>{initialData ? "Editar produto" : "Criar novo produto"}</DialogTitle>
+            </DialogHeader>
             <form onSubmit={handleSubmit} className="space-y-4">
                 <Input placeholder="Descrição" value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} required />
                 <CurrencyInput value={formData.salesValue} onChange={(val) => setFormData({ ...formData, salesValue: val })} />
                 <Input type="number" placeholder="Estoque" value={formData.stock} onChange={(e) => setFormData({ ...formData, stock: Number(e.target.value) })} required />
+                <Input type="file" multiple accept="image/*" onChange={handleImageChange} />
                 <Button type="submit">{initialData ? "Atualizar" : "Criar"} Produto</Button>
             </form>
         </div>

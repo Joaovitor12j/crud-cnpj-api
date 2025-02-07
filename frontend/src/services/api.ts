@@ -14,8 +14,14 @@ export const updateCustomer = (id: string, data: CustomerData) => api.put(`/cust
 
 /* Produtos */
 export const getProducts = () => api.get("/products");
-export const createProduct = (data: FormData) => api.post("/products", data);
-export const updateProduct = (id: string, data: FormData) => api.put(`/products/${id}`, data);
+export const createProduct = (data: FormData) =>
+    api.post("/products", data, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+export const updateProduct = (id: string, data: FormData) =>
+    api.put(`/products/${id}`, data, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
 export const deleteProduct = (id: string) => api.delete(`/products/${id}`);
 
 /* Pedidos */
