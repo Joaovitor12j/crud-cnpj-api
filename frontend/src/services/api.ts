@@ -11,6 +11,7 @@ const api = axios.create({
 export const getCustomers = () => api.get("/customers");
 export const createCustomer = (data: CustomerData) => api.post("/customers", data);
 export const updateCustomer = (id: string, data: CustomerData) => api.put(`/customers/${id}`, data);
+export const getCustomerByCNPJ = (cnpj: string) => api.get(`/cnpj/${cnpj}`);
 
 /* Produtos */
 export const getProducts = () => api.get("/products");
