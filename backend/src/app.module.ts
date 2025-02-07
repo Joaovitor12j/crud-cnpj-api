@@ -9,14 +9,15 @@ import { Product } from "./products/product.entity";
 import { Order } from "./orders/order.entity";
 import { OrderItem } from "./orders/order-item.entity";
 import { CnpjModule } from "./cnpj/cnpj.module";
+
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
     TypeOrmModule.forRoot({
-      type: process.env.DB_TYPE as "mysql",
-      host: process.env.DB_HOST || "localhost",
+      type: process.env.DB_TYPE as any || "mysql",
+      host: process.env.DB_HOST || "db",
       port: parseInt("process.env.DB_PORT", 10) || 3306,
       username: process.env.DB_USERNAME || "root",
       password: process.env.DB_PASSWORD || "password",
