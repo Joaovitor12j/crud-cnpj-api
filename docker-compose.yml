@@ -16,6 +16,8 @@ services:
     build: ./frontend
     ports:
       - "8000:80"
+    volumes:
+      - ./images:/usr/share/nginx/html/products-images
     depends_on:
       - backend
     networks:
