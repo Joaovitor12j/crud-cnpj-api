@@ -24,7 +24,7 @@ export class CnpjController {
   private treatData(data: any): any {
     return {
       companyName: data.razao_social || "N/A",
-      email: data.email || "N/A",
+      email: data.estabelecimento.email || "N/A",
     };
   }
 }
