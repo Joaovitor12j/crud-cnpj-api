@@ -5,6 +5,7 @@ import Customers from "./pages/Customers";
 import ProductForm from "./pages/Products.tsx";
 import Orders from "./pages/Orders";
 import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/react"
 
 const queryClient = new QueryClient();
 
@@ -41,6 +42,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => (
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <Analytics />
+    <SpeedInsights />
     <Toaster />
     <BrowserRouter>
       <Layout>
